@@ -1,0 +1,28 @@
+# Hugo 生成产物
+public/
+resources/_gen/
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE / 编辑器
+.vscode/
+.idea/
+
+# 临时文件
+*.tmp
+*.bak
+
+# 日志
+hugo.log
+
+# Node（如果用 webpack 等工具）
+node_modules/
+
+# 环境变量
+.env
+.env.*

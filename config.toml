@@ -1,0 +1,130 @@
+baseURL = 'https://sikinzen.github.io/'
+languageCode = 'zh-CN'
+title = '温陵布衣'
+theme = ['PaperMod']
+
+# ============================
+# 基本信息
+# ============================
+[params]
+  env = "production"
+  description = "技术随笔 | 嵌入式 | AI | 软件工程"
+  author = "sikinzen"
+  defaultTheme = "auto"          # auto / light / dark
+  ShowShareButtons = true
+  ShowReadingTime = true
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = false
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
+  disableSpecial1stPost = false
+  disableScrollToTop = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+  showtoc = true
+  tocopen = false
+
+  # 首页个人信息
+  [params.homeInfoParams]
+    Title = "你好 👋，我是 sikinzen"
+    Content = """
+    - 📍 厦门思明
+    - 🔧 手机方案设计 / AI 设备 / 对俄外贸
+    - 💻 技术栈：嵌入式 Linux、Android、AI 应用开发
+
+    这里记录技术探索与实践心得，偶尔也聊聊工具与方法论。
+    """
+
+  # 社交链接
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/sikinzen"
+
+  # PaperMod 主题设置
+  [params.assets]
+    favicon = "/favicon.ico"
+    favicon16x16 = "/favicon-16x16.png"
+    favicon32x32 = "/favicon-32x32.png"
+    appleTouchIcon = "/apple-touch-icon.png"
+
+  # 搜索（推荐使用 fuse.js）
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    keys = ["title", "permalink", "summary", "content"]
+
+# ============================
+# 菜单导航
+# ============================
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "📝 文章"
+    url = "/posts/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "archives"
+    name = "📂 归档"
+    url = "/archives/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "search"
+    name = "🔍 搜索"
+    url = "/search/"
+    weight = 30
+
+  [[menu.main]]
+    identifier = "github"
+    name = "GitHub"
+    url = "https://github.com/sikinzen"
+    weight = 40
+
+# ============================
+# 标记相关设置
+# ============================
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+# ============================
+# 其他设置
+# ============================
+[pagination]
+  pagerSize = 10
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true            # 允许 HTML 标签
+  [markup.highlight]
+    style = "dracula"
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+# ============================
+# RSS / Sitemap
+# ============================
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[minify]
+  disableSVG = true
