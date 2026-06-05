@@ -275,7 +275,9 @@ hugo server -D
 
 ---
 
-## 第九步：创建 About 页面
+## 第九步：创建 About 页面 + 搜索/归档页
+
+### 9.1 关于页
 
 ```bash
 # 创建 about 页面
@@ -295,6 +297,42 @@ description: "关于温陵布衣"
 
 - GitHub：https://github.com/sikinzen
 - 邮箱：sikinzen@example.com（替换为真实邮箱）
+```
+
+### 9.2 搜索页（⚠️ 很多人会漏掉这步！）
+
+PaperMod 导航栏自带搜索按钮，但**需要手动创建对应页面文件**，否则点击后 404：
+
+```bash
+mkdir -p content/search
+```
+
+创建 `content/search/_index.md`：
+
+```markdown
+---
+title: "Search"
+layout: search
+description: "搜索文章"
+---
+```
+
+> ⚠️ **必须是 `_index.md`（下划线开头）**，不能写成 `search.md`！详见踩坑记录 #10~#12。
+
+### 9.3 归档页（同上，不创建会 404）
+
+```bash
+mkdir -p content/archives
+```
+
+创建 `content/archives/_index.md`：
+
+```markdown
+---
+title: "Archives"
+layout: archives
+description: "文章归档"
+---
 ```
 
 ---
@@ -578,17 +616,118 @@ static/images/
 
 以下是我搭建过程中真实遇到的所有坑，逐一记录解决方法：
 
-| 问题 | 根本原因 | 解决方法 |
-|------|---------|---------|
-| `hugo new` 执行后找不到生成的文件 | 当前目录不在博客根目录 | 先 `cd` 到博客根目录再执行 |
-| push 后博客 404 | GitHub Pages 默认没开启 | Settings → Pages → Source 选 **"GitHub Actions"** |
-| Build 失败（`exit code 1`） | Hugo 版本太旧，与 PaperMod 不兼容 | workflow 指定 `hugo-version: '0.162.1'` |
-| 触发不了 Actions | workflow 只监听 `main`，但仓库默认分支是 `master` | `branches` 加上 `"master"` |
-| 主题没生效 / 构建报错找不到主题 | checkout 没拉取子模块 | 加 `submodules: true` |
-| `fatal: 'themes/PaperMod' already exists and is not a valid git repo` | 之前有残留目录但不是合法子模块 | `rm -rf themes/PaperMod` 后重新 `git submodule add` |
-| `*** Please tell me who you are.` | Git 未配置用户信息 | `git config user.email "xxx"` + `git config user.name "xxx"` |
-| 本地 `hugo server` 正常，但 GitHub Actions 构建失败 | 本地 Hugo 版本与 workflow 指定版本不一致 | 统一版本号 |
-| `languageCode` 废弃警告 | Hugo v0.158+ 改用 `locale` | 在 `config.toml` 同时保留 `languageCode`（兼容旧版）和 `locale`（新版） |
+| # | 问题 | 根本原因 | 解决方法 |
+|---|------|---------|---------|
+| 1 | `hugo new` 执行后找不到生成的文件 | 当前目录不在博客根目录 | 先 `cd` 到博客根目录再执行 |
+| 2 | push 后博客 404 | GitHub Pages 默认没开启 | Settings → Pages → Source 选 **"GitHub Actions"** |
+| 3 | Build 失败（`exit code 1`） | Hugo 版本太旧，与 PaperMod 不兼容 | workflow 指定 `hugo-version: '0.162.1'` |
+| 4 | 触发不了 Actions | workflow 只监听 `main`，但仓库默认分支是 `master` | `branches` 加上 `"master"` |
+| 5 | 主题没生效 / 构建报错找不到主题 | checkout 没拉取子模块 | 加 `submodules: true` |
+| 6 | `fatal: 'themes/PaperMod' already exists and is not a valid git repo` | 之前有残留目录但不是合法子模块 | `rm -rf themes/PaperMod` 后重新 `git submodule add` |
+| 7 | `*** Please tell me who you are.` | Git 未配置用户信息 | `git config user.email "xxx"` + `git config user.name "xxx"` |
+| 8 | 本地 `hugo server` 正常，但 GitHub Actions 构建失败 | 本地 Hugo 版本与 workflow 指定版本不一致 | 统一版本号 |
+| 9 | `languageCode` 废弃警告 | Hugo v0.158+ 改用 `locale` | 同时保留 `languageCode`（兼容旧版）和 `locale`（新版） |
+| 10 | **🔍 导航栏"搜索"按钮点击后 404** | PaperMod 需要搜索页文件，但未创建 | 创建 `content/search/_index.md`（注意是 `_index.md`，不是 `.md`） |
+| 11 | **📂 导航栏"归档"按钮点击后 404** | PaperMod 需要归档页文件，但未创建 | 创建 `content/archives/_index.md`（同上） |
+| 12 | **创建了 search.md / archives.md 但仍然 404** | 用了普通 `.md` 文件格式，Hugo 把它当单页面处理，找不到 PaperMod 的内置模板 | 改用 `_index.md` 格式（section 首页），并放在对应的子目录中 |
+
+### 🔥 重点展开：搜索和归档页 404 问题（问题 #10~#12）
+
+这个问题**非常容易遇到**，因为 PaperMod 主题的导航栏默认就有「搜索」和「归档」两个按钮，但**不会自动创建对应页面**。
+
+#### 现象
+
+博客上线后，点击右上角：
+
+- **🔍 搜索** → 跳转到 `/search/` → 显示 **404**
+- **📂 归档** → 跳转到 `/archives/` → 显示 **404**
+
+#### 错误做法（第一次尝试 ❌）
+
+```bash
+# ❌ 这样写不行！
+echo '---\nlayout: search\n---' > content/search.md
+echo '---\nlayout: archives\n---' > content/archives.md
+# 结果：部署成功但访问仍然是 404
+```
+
+原因：普通 `.md` 文件在 Hugo 中被当作**独立单页面**处理，而 PaperMod 的搜索/归档功能需要的是 **Section 首页**——即该目录下的 `_index.md`。
+
+#### 正确做法 ✅
+
+```bash
+# 第一步：创建子目录
+mkdir -p content/search content/archives
+
+# 第二步：创建 _index.md（注意下划线开头！）
+```
+
+创建 `content/search/_index.md`：
+
+```markdown
+---
+title: "Search"
+layout: search
+description: "搜索文章"
+---
+```
+
+创建 `content/archives/_index.md`：
+
+```markdown
+---
+title: "Archives"
+layout: archives
+description: "文章归档"
+---
+```
+
+> 💡 **关键知识点：Hugo 的两种页面类型**
+>
+> | 类型 | 文件路径 | 用途 | 示例 |
+> |------|---------|------|------|
+> | **普通页面** | `content/about.md` | 独立的单篇文章或页面 | 关于页、联系页 |
+> | **Section 首页** | `content/posts/_index.md` | 该 section 的索引/列表页 | 文章列表、搜索、归档 |
+>
+> 搜索和归档都属于后者，必须用 `_index.md` 格式，否则 Hugo 找不到对应的 layout 模板。
+
+#### 提交并发布
+
+```bash
+cd G:\AiStudy\MyBlog\Wenling-buyi-blog
+git add content/search/ content/archives/
+git commit -m "fix: 添加搜索和归档页，修复导航 404"
+git push
+# → 1~2 分钟后生效 ✅
+```
+
+### 其他值得注意的问题
+
+#### 推送后 Actions 没有自动触发
+
+如果先推送代码、再去 Settings → Pages 开启 GitHub Actions，**之前的推送不会触发 Actions**。需要再推一次（哪怕是空提交）来触发首次部署：
+
+```bash
+git commit --allow-empty -m "trigger: 启动 GitHub Pages 部署"
+git push
+```
+
+#### 博客目录迁移后 Git 远程仓库丢失
+
+如果用 `robocopy` 或手动复制方式迁移了博客目录，`.git` 目录可能不完整。迁移后务必验证：
+
+```bash
+cd 新目录
+git status          # 应显示 On branch master, working tree clean
+git remote -v        # 应显示 origin → https://github.com/xxx/xxx.git
+git log --oneline -5 # 应看到完整的提交历史
+```
+
+如果 `git remote -v` 无输出，需要重新关联：
+
+```bash
+git remote add origin https://github.com/sikinzen/sikinzen.github.io.git
+```
 
 ---
 
@@ -600,6 +739,7 @@ static/images/
 | 创建站点 + 安装主题 | hugo + git | ⭐ | 10 分钟 |
 | 配置 config.toml | 文本编辑器 | ⭐⭐ | 15 分钟 |
 | 写第一篇文章 | Markdown | ⭐ | 随意 |
+| 创建搜索/归档页（PaperMod 必需） | Markdown + mkdir | ⭐ | **5 分钟（容易漏！）** |
 | 配置 GitHub Actions | YAML + GitHub Settings | ⭐⭐⭐ | 30~60 分钟（主要是踩坑） |
 | **日常写文章发布** | `hugo new` + `git push` | ⭐ | **3 分钟** |
 
