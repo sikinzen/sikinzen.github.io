@@ -1,5 +1,6 @@
 baseURL = 'https://sikinzen.github.io/'
 languageCode = 'zh-CN'
+locale = 'zh-CN'
 title = '温陵布衣'
 theme = ['PaperMod']
 
