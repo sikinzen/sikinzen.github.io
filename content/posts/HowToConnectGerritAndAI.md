@@ -397,6 +397,7 @@ bash server.sh stop
 - [让 AI 读懂你的微信聊天记录：wechat-cli + wx_key 接入指南](https://sikinzen.github.io/posts/howtoconnectwechatandai/) — 个人微信接入方案
 - [让 AI 读懂你的企业微信：wechat-decrypt 接入指南](https://sikinzen.github.io/posts/howtoconnectwecomandai/) — 企业微信接入方案
 - [让 AI 管理你的项目：禅道 ZenTaoMcp 接入指南](https://sikinzen.github.io/posts/howtoconnectzentaoandai/) — 禅道项目管理系统接入方案
+- [让 AI 管理你的代码仓库：Gitea MCP Server 接入指南](https://sikinzen.github.io/posts/howtoconnectgiteaandai/) — Gitea 代码托管平台接入方案
 - 本文 — Gerrit 代码审查系统接入方案
 
 ---
