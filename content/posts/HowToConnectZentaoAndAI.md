@@ -12,7 +12,7 @@ series: ["AI工具链"]
 
 ## 背景：为什么要把禅道接入 AI？
 
-前两篇写了[个人微信](./HowToConnectWechatAndAI.md)和[企业微信](./HowToConnectWeComAndAI.md)接入 AI 的方案，解决的是**沟通数据**的 AI 化问题。但在日常工作中，还有一个信息密度极高的系统——**禅道**。
+前两篇写了[个人微信](https://sikinzen.github.io/posts/howtoconnectwechatandai/)和[企业微信](https://sikinzen.github.io/posts/howtoconnectwecomandai/)接入 AI 的方案，解决的是**沟通数据**的 AI 化问题。但在日常工作中，还有一个信息密度极高的系统——**禅道**。
 
 项目进度、Bug 追踪、需求管理、任务分配……这些结构化的项目管理数据如果能让 AI 直接读取和操作，就可以：
 
@@ -380,8 +380,8 @@ AI 助手会自动调用对应的 MCP 工具，查询并整理结果。
 
 ## 系列文章
 
-- [让 AI 读懂你的微信聊天记录：wechat-cli + wx_key 接入指南](./HowToConnectWechatAndAI.md) — 个人微信接入方案
-- [让 AI 读懂你的企业微信：wechat-decrypt 接入指南](./HowToConnectWeComAndAI.md) — 企业微信接入方案
+- [让 AI 读懂你的微信聊天记录：wechat-cli + wx_key 接入指南](https://sikinzen.github.io/posts/howtoconnectwechatandai/) — 个人微信接入方案
+- [让 AI 读懂你的企业微信：wechat-decrypt 接入指南](https://sikinzen.github.io/posts/howtoconnectwecomandai/) — 企业微信接入方案
 - 本文 — 禅道项目管理系统接入方案
 
 ---
