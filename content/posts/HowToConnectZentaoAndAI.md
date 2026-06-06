@@ -382,6 +382,7 @@ AI 助手会自动调用对应的 MCP 工具，查询并整理结果。
 
 - [让 AI 读懂你的微信聊天记录：wechat-cli + wx_key 接入指南](https://sikinzen.github.io/posts/howtoconnectwechatandai/) — 个人微信接入方案
 - [让 AI 读懂你的企业微信：wechat-decrypt 接入指南](https://sikinzen.github.io/posts/howtoconnectwecomandai/) — 企业微信接入方案
+- [让 AI 参与代码审查：Gerrit MCP Server 接入指南](https://sikinzen.github.io/posts/howtoconnectgerritandai/) — Gerrit 代码审查系统接入方案
 - 本文 — 禅道项目管理系统接入方案
 
 ---
