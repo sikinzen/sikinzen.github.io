@@ -2,6 +2,7 @@ baseURL = 'https://sikinzen.github.io/'
 locale = 'zh-CN'
 title = '温陵布衣'
 theme = ['PaperMod']
+enableGitInfo = true
 
 # ============================
 # 基本信息
@@ -17,6 +18,7 @@ theme = ['PaperMod']
   ShowBreadCrumbs = true
   ShowCodeCopyButtons = true
   ShowWordCount = false
+  ShowLastMod = true
   ShowRssButtonInSectionTermList = true
   UseHugoToc = true
   disableSpecial1stPost = false
