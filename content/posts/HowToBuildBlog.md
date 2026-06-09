@@ -1,6 +1,7 @@
 ---
 title: "如何使用 AI 搭建自己的博客"
 date: 2026-06-05T13:14:00+08:00
+lastmod: 2026-06-09T20:20:00+08:00
 draft: false
 description: "从零到上线，全程用 AI 助手搭建 Hugo + GitHub Pages 个人技术博客的完整记录"
 summary: "用 WorkBuddy AI 助手，从零搭建 Hugo + PaperMod + GitHub Pages 博客，记录完整过程和踩坑经验"
@@ -728,6 +729,102 @@ git log --oneline -5 # 应看到完整的提交历史
 ```bash
 git remote add origin https://github.com/sikinzen/sikinzen.github.io.git
 ```
+
+---
+
+## 后续完善记录
+
+博客上线后，又陆续做了不少优化。以下按时间线记录，方便后续追溯。
+
+### 一、Bug 修复
+
+**1. `languageCode` 弃用警告**
+
+Hugo v0.158+ 中 `languageCode` 被标记为废弃，改用 `locale`。`config.toml` 中已删除 `languageCode` 字段，仅保留 `locale = 'zh-CN'`。
+
+**2. 搜索页 & 归档页 404**
+
+根因：`content/search/_index.md` 和 `content/archives/_index.md` 中 Front Matter 的 `---` 结束符缺失，导致 Hugo 无法正确解析，构建后这两个页面为空白/404。补全结束符后恢复正常。
+
+### 二、功能增强
+
+**1. 显示文章修改时间（`ShowLastMod`）**
+
+三步实现：
+
+```toml
+# config.toml
+enableGitInfo = true     # 让 Hugo 从 git log 自动提取每个文件的最后提交时间
+
+[params]
+  ShowLastMod = true      # 在文章页显示"修改: YYYY年M月D日"
+```
+
+创建自定义模板 `layouts/partials/post_meta.html`，覆盖 PaperMod 主题默认的元信息渲染逻辑，新增 lastmod 显示行：
+
+```html
+{{- if and site.Params.ShowLastMod (not .Lastmod.IsZero) (ne .Lastmod .Date) -}}
+  <span title="最后修改: {{ .Lastmod }}">
+    修改: {{ .Lastmod | time.Format ":date_long" }}
+  </span>
+{{- end }}
+```
+
+> ⚠️ 前提：GitHub Actions workflow 中 `fetch-depth: 0` 确保拉取完整 git 历史，否则 `.GitInfo` 只能获取最近一次提交时间。
+
+**2. 文章修改记录链接（`editPost`）**
+
+在每篇文章底部添加"📝 修改记录"链接，点击跳转到 GitHub 上该文件的完整 commit 历史，每一次修改的时间、作者、commit message 一目了然：
+
+```toml
+# config.toml [params] 下新增
+[params.editPost]
+  URL = "https://github.com/sikinzen/sikinzen.github.io/commits/master/content"
+  Text = "📝 修改记录"
+  appendFilePath = true   # 自动拼接当前文件相对路径
+```
+
+生成的实际链接示例：`https://github.com/sikinzen/sikinzen.github.io/commits/master/content/posts/HowToBuildBlog.md`
+
+**3. 分类页面与导航栏**
+
+创建 `content/categories/_index.md`，并在 `config.toml` 导航菜单中添加「🏷️ 分类」入口：
+
+```toml
+[[menu.main]]
+  identifier = "categories"
+  name = "🏷️ 分类"
+  url = "/categories/"
+  weight = 15
+```
+
+### 三、内容建设
+
+博客上线后陆续发布了以下文章：
+
+| 文件 | 内容 |
+|------|------|
+| `grill-me-devs-popularity.md` | Grill Me 深度解析：20个词的AI技能凭什么火遍开发者圈 |
+| `HowToUseWorkBuddy1st.md` | 我重度使用 WorkBuddy 后，总结出 6 条真实经验 |
+| `HowToUseWorkBuddy2nd.md` | WorkBuddy 从入门到精通——10个上手技巧 |
+| `HowToUseVPN.md` | 科学上网配置指南：从服务选购到多端部署 |
+| `HowToConnectZentaoAndAI.md` | 禅道接入 AI 实操指南 |
+| `HowToConnectGerritAndAI.md` | Gerrit 接入 AI 实操指南 |
+| `HowToConnectGiteaAndAI.md` | Gitea 接入 AI 实操指南 |
+| `HowToConnectWechatAndAI.md` | 微信本地数据查询接入 AI |
+| `HowToConnectWeComAndAI.md` | 企业微信本地数据查询接入 AI |
+
+### 四、WorkBuddy 写博客的积分优化经验
+
+用 WorkBuddy 写博客时，发现单篇文章可能消耗上百积分，分析根因后总结出**三板斧**：
+
+| 策略 | 效果 | 原理 |
+|------|------|------|
+| **粘贴内容替代链接** | 省 60~80% | 微信链接有反爬机制，AI 需要多轮 WebFetch + 搜索重试才能获取内容，直接粘贴免除所有抓取开销 |
+| **新博客开新会话** | 省 30~50% | 上下文会随对话轮次膨胀，旧会话中每次响应都携带大量历史 token |
+| **精简指令不加验证** | 省 10~20% | 去掉"检查格式""预览效果"等非必要步骤，直接生成并交付 |
+
+> 💡 最佳实践：开新会话 → 粘贴文章原始内容 → 一句指令"按博客规范整理成 md 文件"→ 完成。整个过程通常控制在 20 积分以内。
 
 ---
 
