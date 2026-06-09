@@ -23,7 +23,7 @@ enableGitInfo = true
   UseHugoToc = true
   disableSpecial1stPost = false
   disableScrollToTop = false
-  comments = false
+  comments = true
   hidemeta = false
 
   # 修改记录：点击跳转到 GitHub 查看该文章的提交历史
