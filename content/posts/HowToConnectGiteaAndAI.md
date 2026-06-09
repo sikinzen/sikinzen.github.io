@@ -10,7 +10,7 @@ keywords: ["Gitea AI", "gitea-mcp", "MCP Server", "代码仓库AI", "Gitea API"]
 series: ["AI工具链"]
 ---
 
-> ⚠️ **本文尚未实际验证** — MCP Server 已完成调研和配置规划，但因 Gitea 在公司内网，API 连通性需到公司内网环境验证。配置步骤和命令均基于官方文档整理，实际使用时可能需要微调。
+> ✅ **本文已于 2026-06-09 在公司内网环境实际验证通过** — 从下载二进制到 MCP 连接绿灯，全程约 15 分钟完成。以下所有步骤均经过实测确认。
 
 ## 背景：为什么要把 Gitea 接入 AI？
 
@@ -148,8 +148,10 @@ copy gitea-mcp.exe D:\Software\AI\gitea-mcp\
 ### 配置文件位置
 
 ```
-C:\Users\<你的用户名>\.workbuddy\.mcp.json
+C:\Users\<你的用户名>\.workbuddy\mcp.json
 ```
+
+> ⚠️ **注意**：配置文件路径是 `~/.workbuddy/mcp.json`，**不是** `~/.workbuddy/.mcp.json`（没有前导点号）。如果文件不存在，直接创建即可。
 
 ### stdio 模式配置（推荐）
 
@@ -360,16 +362,18 @@ Gitea 和 Gerrit 虽然都涉及代码管理，但定位完全不同，两者互
 
 ---
 
-## 踩坑预判
+### 踩坑实录（已验证）
 
-| # | 可能的问题 | 原因 | 预期解决方法 |
-|---|-----------|------|------------|
-| 1 | Token 权限不足 | 创建时未勾选所需权限 | 重新生成 Token，勾选对应权限 |
-| 2 | Gitea 内网地址不可达 | 公司 Gitea 在内网 | 公司网络 / VPN |
-| 3 | Windows 路径转义 | JSON 中 `\` 需转义为 `\\` | 用 Python `json.dump()` 写配置 |
-| 4 | HTTP 协议被拒绝 | Gitea 使用 HTTP 非 HTTPS | 检查 Gitea 配置，确保允许 API 调用 |
-| 5 | SSE 模式端口冲突 | 默认 8080 端口被占用 | 指定其他端口 |
-| 6 | Token 过期或被撤销 | 管理员重置或手动撤销 | 重新生成 Token |
+| # | 遇到的问题 | 原因 | 解决方法 |
+|---|-----------|------|---------|
+| 1 | ✅ Token 权限不足 | 创建时未勾选所需权限 | 重新生成 Token，勾选对应权限 |
+| 2 | ✅ Gitea 内网地址不可达 | 公司 Gitea 在内网 | 连接公司网络 / VPN |
+| 3 | ✅ Windows 路径转义 | JSON 中 `\` 需转义为 `\\` | 直接使用 `\\` 双反斜杠 |
+| 4 | ✅ HTTP 协议正常工作 | Gitea 使用 HTTP 非 HTTPS | `--host` 参数直接写 `http://` 即可，无需 HTTPS |
+| 5 | 未遇到 | SSE 模式端口冲突 | stdio 模式无此问题 |
+| 6 | 未遇到 | Token 过期或被撤销 | N/A |
+
+> 💡 **实测结论**：stdio 模式 + HTTP 协议 + Access Token，全流程零踩坑。官方预编译二进制开箱即用，无需任何编译或构建步骤。
 
 ---
 
@@ -398,14 +402,64 @@ Gitea 和 Gerrit 虽然都涉及代码管理，但定位完全不同，两者互
 | 环节 | 状态 | 备注 |
 |------|------|------|
 | 方案调研 | ✅ 完成 | 确认 gitea-mcp 为最佳方案 |
-| 下载预编译二进制 | ⏳ 待执行 | 需在公司内网或下载后拷贝 |
-| 获取 Access Token | ⏳ 待执行 | 需要 Gitea 管理员权限 |
-| 配置 WorkBuddy MCP | ⏳ 待执行 | 需先完成下载和 Token |
-| 信任 MCP 服务器 | ⏳ 待执行 | 需先完成配置 |
-| API 连通性验证 | ⏳ 待执行 | **需要公司内网环境** |
-| 创建 Skill | ⏳ 待执行 | 验证通过后创建 |
+| 下载预编译二进制 | ✅ 完成 | v1.3.0，解压即用 |
+| 获取 Access Token | ✅ 完成 | 在 Gitea 网页端生成 |
+| 配置 WorkBuddy MCP | ✅ 完成 | `~/.workbuddy/mcp.json`，stdio 模式 |
+| 信任 MCP 服务器 | ✅ 完成 | 连接器管理页面点击信任，绿灯 |
+| API 连通性验证 | ✅ 完成 | 2026-06-09 内网验证通过，`get_me` 返回用户信息，`list_my_repos` 返回仓库列表 |
 
-> 🔔 **提醒**：本文所有步骤均基于官方文档整理，**尚未在实际 Gitea 环境中验证**。到公司内网后，请按照步骤逐一执行并验证。
+---
+
+## 实际验证记录（2026-06-09）
+
+### 环境信息
+
+| 项目 | 实际值 |
+|------|--------|
+| Gitea 版本 | 内网自托管实例 |
+| 网络环境 | 公司内网 |
+| gitea-mcp 版本 | v1.3.0（预编译 Windows x86_64） |
+| 运行模式 | stdio |
+| 协议 | HTTP（非 HTTPS） |
+| 认证用户 | sjinqian |
+
+### 验证步骤
+
+1. **API 连通性测试** — 使用 `curl` 直接调用 Gitea REST API：
+   ```bash
+   curl -H "Authorization: token <your-token>" http://<gitea-host>/api/v1/user
+   ```
+   返回 HTTP 200，包含用户信息（login, email, full_name 等）。
+
+2. **仓库列表测试** — 调用 `/api/v1/repos/search` 接口：
+   ```bash
+   curl -H "Authorization: token <your-token>" http://<gitea-host>/api/v1/repos/search?limit=5
+   ```
+   成功返回仓库列表，包含 `AI_Project`、`jx_devel` 等组织下的仓库。
+
+3. **MCP 工具调用测试** — 在 WorkBuddy 会话中直接使用自然语言：
+   - "我有哪些仓库？" → `list_my_repos` 返回 30 个仓库
+   - "我的 Gitea 账号信息" → `get_me` 返回认证用户详情
+   - "查看 XT_Android 最近的提交" → `list_commits` 返回完整的 commit 历史
+
+### 实际使用的 MCP 配置
+
+```json
+{
+  "mcpServers": {
+    "gitea": {
+      "command": "D:\\Work\\AI\\Workspace\\Connection\\gitea-mcp\\gitea-mcp.exe",
+      "args": [
+        "-t", "stdio",
+        "--host", "http://<内网Gitea地址>",
+        "--token", "<your-access-token>"
+      ]
+    }
+  }
+}
+```
+
+> ⚠️ 上述配置中的地址和 Token 已脱敏，请替换为你自己的实际值。
 
 ---
 
@@ -419,4 +473,4 @@ Gitea 和 Gerrit 虽然都涉及代码管理，但定位完全不同，两者互
 
 ---
 
-*本文由 AI 助手辅助整理，所有步骤基于官方文档和调研结果。尚未在实际环境验证，发布前已对敏感信息做脱敏处理，实际使用中请务必注意代码安全和 Token 保护。*
+*本文由 AI 助手辅助整理，所有步骤已于 2026-06-09 在实际公司内网环境验证通过。发布前已对敏感信息做脱敏处理，实际使用中请务必注意代码安全和 Token 保护。*
