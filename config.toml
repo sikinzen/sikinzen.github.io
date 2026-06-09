@@ -25,6 +25,12 @@ enableGitInfo = true
   disableScrollToTop = false
   comments = false
   hidemeta = false
+
+  # 修改记录：点击跳转到 GitHub 查看该文章的提交历史
+  [params.editPost]
+    URL = "https://github.com/sikinzen/sikinzen.github.io/commits/master/content"
+    Text = "📝 修改记录"
+    appendFilePath = true
   hideSummary = false
   showtoc = true
   tocopen = false
