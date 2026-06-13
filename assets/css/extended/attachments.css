@@ -1,0 +1,59 @@
+/* ==========================================
+   附件下载区域样式 — 匹配 PaperMod 主题风格
+   ========================================== */
+
+.post-attachments {
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--entry);
+}
+
+.post-attachments h3 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.attachment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.attachment-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 0.9rem;
+}
+
+.attachment-list li:last-child {
+  border-bottom: none;
+}
+
+.attachment-icon {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+}
+
+.attachment-list a {
+  color: var(--primary);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.attachment-list a:hover {
+  text-decoration: underline;
+}
+
+.attachment-meta {
+  flex-shrink: 0;
+  color: var(--secondary);
+  font-size: 0.8rem;
+  margin-left: auto;
+}

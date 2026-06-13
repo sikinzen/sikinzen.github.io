@@ -1,0 +1,48 @@
+{{- /* 附件列表短代码：自动列出 Page Bundle 中的所有非文章文件 */ -}}
+{{- $resources := .Page.Resources -}}
+{{- $attachments := slice -}}
+{{- range $resources -}}
+  {{- $ext := path.Ext .Name | lower -}}
+  {{- if not (in (slice ".md" ".html" ".htm") $ext) -}}
+    {{- $attachments = $attachments | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if gt (len $attachments) 0 -}}
+<div class="post-attachments">
+  <h3>📎 附件下载</h3>
+  <ul class="attachment-list">
+  {{- range $attachments -}}
+    {{- $ext := path.Ext .Name | lower -}}
+    {{- $icon := "📄" -}}
+    {{- if in (slice ".pdf") $ext }}{{ $icon = "📕" }}
+    {{- else if in (slice ".zip" ".rar" ".7z" ".tar" ".gz" ".bz2" ".xz") $ext }}{{ $icon = "📦" }}
+    {{- else if in (slice ".png" ".jpg" ".jpeg" ".gif" ".svg" ".webp" ".bmp") $ext }}{{ $icon = "🖼️" }}
+    {{- else if in (slice ".doc" ".docx") $ext }}{{ $icon = "📝" }}
+    {{- else if in (slice ".xls" ".xlsx" ".csv") $ext }}{{ $icon = "📊" }}
+    {{- else if in (slice ".pptx" ".ppt") $ext }}{{ $icon = "📽️" }}
+    {{- else if in (slice ".mp4" ".avi" ".mov" ".mkv" ".webm") $ext }}{{ $icon = "🎬" }}
+    {{- else if in (slice ".mp3" ".wav" ".flac" ".ogg") $ext }}{{ $icon = "🎵" }}
+    {{- else if in (slice ".py" ".js" ".ts" ".go" ".rs" ".cpp" ".c" ".java" ".sh" ".ps1") $ext }}{{ $icon = "💻" }}
+    {{- else if in (slice ".json" ".yaml" ".toml" ".xml" ".ini" ".cfg") $ext }}{{ $icon = "⚙️" }}
+    {{- end -}}
+    {{- $filesize := "" -}}
+    {{- with .Content -}}
+      {{- $sizeKB := div (len .) 1024.0 -}}
+      {{- if gt $sizeKB 1024.0 -}}
+        {{- $filesize = printf "%.1f MB" (div $sizeKB 1024.0) -}}
+      {{- else -}}
+        {{- $filesize = printf "%.1f KB" $sizeKB -}}
+      {{- end -}}
+    {{- end -}}
+    <li>
+      <span class="attachment-icon">{{ $icon }}</span>
+      <a href="{{ .RelPermalink }}" download>{{ .Name }}</a>
+      {{- if $filesize }}
+      <span class="attachment-meta">({{ replace $ext "." "" | upper }}, {{ $filesize }})</span>
+      {{- end }}
+    </li>
+  {{- end -}}
+  </ul>
+</div>
+{{- end -}}
