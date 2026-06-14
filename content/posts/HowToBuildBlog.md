@@ -514,6 +514,134 @@ git push
 | `categories` | 分类（可多个） | `["工具", "教程"]` |
 | `keywords` | 关键词（SEO 用） | `["博客搭建"]` |
 | `series` | 文章系列 | `["Hugo 教程"]` |
+|---------|------|---------|
+
+---
+
+## 带附件的文章（Page Bundle 模式）
+
+当文章需要附带图片、PDF、压缩包等附件时，需要使用 Hugo 的 **Page Bundle** 机制。这是 Hugo 原生支持的特性，与传统的单文件文章并存，无需全局迁移。
+
+### 两种文章模式对比
+
+| 模式 | 存放方式 | 适用场景 |
+|------|---------|---------|
+| 传统单文件 | `content/posts/文章名.md` | 纯文本文章，无附件 |
+| Page Bundle（目录） | `content/posts/文章名/index.md` + 附件文件 | 需要附带图片、PDF、代码包等 |
+
+两种模式完全兼容，Hugo 会自动识别：
+- 存在 `content/posts/foo.md` → 当作单文件文章处理
+- 存在 `content/posts/bar/` 目录且含 `index.md` → 当作 Page Bundle 处理
+
+**存量文章无需任何迁移**，只有需要加附件时才将对应文章转为目录结构。
+
+### 创建 Page Bundle 文章的两种方式
+
+**方式一：`hugo new` 后手动转目录（推荐）**
+
+```bash
+# 第一步：用 hugo new 生成单文件（自动填充 Front Matter）
+cd G:\AiStudy\MyBlog\Wenling-buyi-blog
+hugo new posts/文章名.md
+
+# 第二步：转成目录结构
+mkdir content\posts\文章名
+move content\posts\文章名.md content\posts\文章名\index.md
+
+# 第三步：放入附件
+copy 你的附件.png content\posts\文章名\
+```
+
+**方式二：直接手动创建目录和 `index.md`**
+
+```bash
+mkdir content\posts\文章名
+# 然后手动创建 index.md 并填写 Front Matter
+```
+
+> 💡 方式一更推荐，因为 `hugo new` 会自动从 `archetypes/default.md` 读取模板，省去手动填写 Front Matter 的麻烦。
+
+### 在文章中引用附件
+
+**方式一：正文中直接 Markdown 链接（精准引用）**
+
+适合在文章特定位置引用某个附件：
+
+```markdown
+架构参考下图：
+
+![架构图](architecture.png)
+
+配套代码下载：[sample-code.zip](sample-code.zip)
+
+参考文档：[设计文档.pdf](design-doc.pdf)
+```
+
+> ⚠️ 路径是**相对路径**，因为 `index.md` 和附件在同一个目录下。
+
+**方式二：`{{< attachments >}}` 短代码（自动罗列全部附件）**
+
+在文章末尾添加这行，Hugo 会自动列出该目录下所有非 Markdown 文件：
+
+```markdown
+---
+
+{{< attachments >}}
+```
+
+渲染效果包含：
+- 文件类型图标（📗 PDF、📦 压缩包、🖼️ 图片、📝 Word、📊 Excel、💻 代码等）
+- 文件名和格式标签
+- 文件大小
+
+### 完整示例
+
+目录结构：
+
+```
+content/posts/how-to-use-openclaw/
+├── index.md          # 文章正文
+├── architecture.png  # 架构图
+├── sample-code.zip  # 示例代码包
+└── reference.pdf     # 参考文档
+```
+
+`index.md` 内容：
+
+```markdown
+---
+title: "How To Use OpenClaw"
+date: 2026-06-14T10:00:00+08:00
+draft: false
+description: "OpenClaw 入门指南"
+tags: ["AI", "OpenClaw"]
+---
+
+## 架构说明
+
+如下图所示：
+
+![架构图](architecture.png)
+
+## 示例代码
+
+下载示例代码：[sample-code.zip](sample-code.zip)
+
+## 参考资料
+
+[reference.pdf](reference.pdf)
+
+---
+
+{{< attachments >}}
+```
+
+### 自定义附件列表样式（可选）
+
+如果需要对附件列表区域做样式调整，可以在 `assets/css/extended/attachments.css` 中自定义。PaperMod 主题会自动加载 `assets/css/extended/` 目录下的所有 CSS 文件。
+
+---
+
 
 ---
 
