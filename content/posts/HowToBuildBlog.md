@@ -5,7 +5,7 @@ lastmod: 2026-06-09T20:57:00+08:00
 draft: false
 description: "从零到上线，全程用 AI 助手搭建 Hugo + GitHub Pages 个人技术博客的完整记录"
 summary: "用 WorkBuddy AI 助手，从零搭建 Hugo + PaperMod + GitHub Pages 博客，记录完整过程和踩坑经验"
-categories: ["工具"]
+categories: ["工具教程"]
 tags: ["Hugo", "GitHub Pages", "AI助手", "博客搭建", "PaperMod"]
 keywords: ["Hugo", "GitHub Pages", "博客搭建", "静态站点", "PaperMod"]
 series: []

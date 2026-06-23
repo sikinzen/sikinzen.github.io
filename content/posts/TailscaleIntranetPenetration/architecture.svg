@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="tailscale" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4a90d9"/>
+      <stop offset="100%" stop-color="#357abd"/>
+    </linearGradient>
+    <linearGradient id="laptopGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2ecc71"/>
+      <stop offset="100%" stop-color="#27ae60"/>
+    </linearGradient>
+    <linearGradient id="serverGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e74c3c"/>
+      <stop offset="100%" stop-color="#c0392b"/>
+    </linearGradient>
+    <linearGradient id="dmzGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f39c12"/>
+      <stop offset="100%" stop-color="#e67e22"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)" rx="12"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#ecf0f1" font-size="18" font-weight="bold">Tailscale 内网穿透架构图</text>
+
+  <!-- Company Network Box -->
+  <rect x="420" y="55" width="350" height="350" rx="10" fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,4" opacity="0.6"/>
+  <text x="595" y="72" text-anchor="middle" fill="#e74c3c" font-size="10">公司内网 · 192.168.1.0/24</text>
+
+  <!-- Gitea -->
+  <rect x="475" y="95" width="110" height="55" rx="6" fill="#2c3e50" stroke="#3498db" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="530" y="118" text-anchor="middle" fill="#3498db" font-size="13" font-weight="bold">Gitea 代码仓库</text>
+  <text x="530" y="138" text-anchor="middle" fill="#7f8c8d" font-size="10">192.168.1.47:3002</text>
+
+  <!-- ZenTao -->
+  <rect x="610" y="95" width="110" height="55" rx="6" fill="#2c3e50" stroke="#3498db" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="665" y="118" text-anchor="middle" fill="#3498db" font-size="13" font-weight="bold">禅道 项目管理</text>
+  <text x="665" y="138" text-anchor="middle" fill="#7f8c8d" font-size="10">192.168.1.49:88</text>
+
+  <!-- File Server -->
+  <rect x="475" y="170" width="110" height="55" rx="6" fill="#2c3e50" stroke="#3498db" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="530" y="193" text-anchor="middle" fill="#3498db" font-size="13" font-weight="bold">文件共享</text>
+  <text x="530" y="213" text-anchor="middle" fill="#7f8c8d" font-size="10">SMB / 网络驱动器</text>
+
+  <!-- Ubuntu build -->
+  <rect x="610" y="170" width="110" height="55" rx="6" fill="#2c3e50" stroke="#3498db" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="665" y="193" text-anchor="middle" fill="#3498db" font-size="13" font-weight="bold">编译服务器</text>
+  <text x="665" y="213" text-anchor="middle" fill="#7f8c8d" font-size="10">Ubuntu · SSH</text>
+
+  <!-- Subnet Router → 箭头到内部设备 -->
+  <!-- Gitea -->
+  <line x1="440" y1="250" x2="530" y2="150" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="440" y1="250" x2="665" y2="150" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="440" y1="250" x2="530" y2="225" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="440" y1="250" x2="665" y2="225" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Subnet Router (Company Win10) -->
+  <rect x="440" y="250" width="280" height="70" rx="8" fill="url(#dmzGrad)" filter="url(#shadow)"/>
+  <text x="580" y="275" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">公司 Win10 · Tailscale Subnet Router</text>
+  <text x="580" y="295" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-size="11">tailscale up --advertise-routes=192.168.1.0/24</text>
+  <text x="580" y="312" text-anchor="middle" fill="rgba(255,255,255,0.65)" font-size="10">Tailscale IP: 100.77.129.109</text>
+
+  <!-- Tailscale Cloud -->
+  <rect x="440" y="340" width="280" height="50" rx="8" fill="url(#tailscale)" filter="url(#shadow)"/>
+  <text x="580" y="362" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">Tailscale 协调服务器 (控制平面)</text>
+  <text x="580" y="380" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">密钥交换 · 路由广播 · ACL 管理</text>
+
+  <!-- WireGuard tunnel -->
+  <line x1="165" y1="270" x2="440" y2="305" stroke="#4a90d9" stroke-width="3" stroke-dasharray="8,4"/>
+  <text x="310" y="262" text-anchor="middle" fill="#4a90d9" font-size="10" font-weight="bold">WireGuard 加密隧道</text>
+
+  <!-- DERP label -->
+  <text x="310" y="280" text-anchor="middle" fill="#e74c3c" font-size="9">(当前: DERP 中继 · 待优化为 P2P 直连)</text>
+
+  <!-- Laptop -->
+  <rect x="30" y="80" width="270" height="280" rx="10" fill="#2c3e50" stroke="#2ecc71" stroke-width="2" filter="url(#shadow)"/>
+  <text x="165" y="105" text-anchor="middle" fill="#2ecc71" font-size="13" font-weight="bold">你在任何地方的笔记本</text>
+  <text x="165" y="122" text-anchor="middle" fill="#7f8c8d" font-size="10">Tailscale IP: 100.103.248.8</text>
+
+  <!-- Browser access -->
+  <rect x="55" y="145" width="220" height="40" rx="5" fill="#1a1a2e" stroke="#4a90d9" stroke-width="1"/>
+  <text x="165" y="162" text-anchor="middle" fill="#ecf0f1" font-size="11">🌐 浏览器访问 Gitea / 禅道</text>
+  <text x="165" y="178" text-anchor="middle" fill="#7f8c8d" font-size="9">http://192.168.1.47:3002</text>
+
+  <!-- SMB drive -->
+  <rect x="55" y="200" width="220" height="40" rx="5" fill="#1a1a2e" stroke="#4a90d9" stroke-width="1"/>
+  <text x="165" y="217" text-anchor="middle" fill="#ecf0f1" font-size="11">📁 Z: 盘映射 (SMB 文件共享)</text>
+  <text x="165" y="233" text-anchor="middle" fill="#7f8c8d" font-size="9">\\100.77.129.109\CompanyFiles</text>
+
+  <!-- SSH -->
+  <rect x="55" y="255" width="220" height="40" rx="5" fill="#1a1a2e" stroke="#4a90d9" stroke-width="1"/>
+  <text x="165" y="272" text-anchor="middle" fill="#ecf0f1" font-size="11">💻 SSH 远程编译 (待接入)</text>
+  <text x="165" y="288" text-anchor="middle" fill="#7f8c8d" font-size="9">Ubuntu 编译服务器</text>
+
+  <!-- Status note -->
+  <rect x="55" y="320" width="220" height="28" rx="5" fill="rgba(231,76,60,0.15)" stroke="#e74c3c" stroke-width="1"/>
+  <text x="165" y="339" text-anchor="middle" fill="#e74c3c" font-size="10">⚠ 当前: relay · 待 UDP 41641 放行 → P2P</text>
+
+</svg>

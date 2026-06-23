@@ -3,7 +3,7 @@ title: "OpenClaw 入门指南：打造你的个人 AI 代理平台"
 date: 2026-06-14T10:30:00+08:00
 draft: false
 description: "全面解析开源 AI 代理平台 OpenClaw，从核心概念（Gateway、Agent、Skill、Channel 等）到 11 项核心技能详解，附带 1Panel 部署实战和 QQ 机器人接入指南。"
-categories: ["AI"]
+categories: ["AI应用"]
 tags: ["OpenClaw", "AI Agent", "Docker", "1Panel", "QQ机器人", "自动化"]
 keywords: ["OpenClaw", "AI代理", "AI Agent", "Gateway", "QQ机器人", "自动化部署", "1Panel部署"]
 series: []

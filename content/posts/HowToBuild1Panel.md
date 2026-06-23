@@ -3,10 +3,10 @@ title: "1Panel 面板搭建与使用指南"
 date: 2026-06-14T10:30:00+08:00
 draft: false
 description: "从零开始搭建 1Panel Linux 面板，涵盖安装步骤、命令行工具 1pctl 用法、常用应用栈及学习资源，适合替代宝塔面板进行现代化服务器运维。"
-categories: ["运维"]
+categories: ["工具教程"]
 tags: ["1Panel", "Linux", "Docker", "运维", "面板", "服务器"]
 keywords: ["1Panel", "1Panel安装", "Linux面板", "Docker运维", "宝塔替代", "1pctl"]
-series: []
+series: ["网络与运维"]
 ---
 
 ## 一、1Panel 是什么？
