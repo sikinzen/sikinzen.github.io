@@ -13,7 +13,7 @@ series: ["网络与运维"]
 
 作为一家手机厂商的技术负责人，我日常需要处理以下场景：
 
-- **出差时**访问公司内网的 Gitea 代码仓库（`192.168.1.47:3002`）和禅道项目管理系统（`192.168.1.49:88`）
+- **出差时**访问公司内网的 Gitea 代码仓库（`192.168.1.10:3000`）和禅道项目管理系统（`192.168.1.20:80`）
 - **在家办公时**读写公司电脑上的各类文档和资料
 - **远程 SSH** 到公司内的 Ubuntu 编译服务器
 
@@ -54,7 +54,7 @@ series: ["网络与运维"]
   tailscale up --accept-routes
   → 接受 Subnet Router 广播的路由
 
-结果：笔记本上直接访问 192.168.1.47 → 流量自动走 Tailscale 隧道 → 公司 Win10 转发 → 实际内网服务
+结果：笔记本上直接访问 192.168.1.10 → 流量自动走 Tailscale 隧道 → 公司 Win10 转发 → 实际内网服务
 ```
 
 关键点：
@@ -78,8 +78,8 @@ series: ["网络与运维"]
 
 ```powershell
 tailscale status
-# 100.77.129.109  desktop-ra0nmat  sikinzen@  windows  -
-# 100.103.248.8   alex            sikinzen@  windows  -
+# 100.64.1.1   office-pc   user@  windows  -
+# 100.64.1.2   laptop      user@  windows  -
 ```
 
 两台机器出现在同一个 tailnet 里就是通了。
@@ -127,7 +127,7 @@ mklink /D "D:\CompanyFiles\技术资料" "E:\TechDocs"
 3. 在笔记本上映射为网络驱动器：
 
 ```powershell
-net use Z: \\100.77.129.109\CompanyFiles /persistent:yes
+net use Z: \\100.64.1.1\CompanyFiles /persistent:yes
 ```
 
 > Z: 盘就是你全部的公司文件，双击秒开，就像在本地一样。
@@ -138,11 +138,11 @@ net use Z: \\100.77.129.109\CompanyFiles /persistent:yes
 
 ```powershell
 # 测试 Gitea
-curl http://192.168.1.47:3002
+curl http://192.168.1.10:3000
 # → HTTP 200，返回完整 HTML 页面 ✅
 
 # 浏览器打开禅道
-# http://192.168.1.49:88 ✅
+# http://192.168.1.20:80 ✅
 
 # 查看连接状态
 tailscale status

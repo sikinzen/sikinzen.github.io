@@ -3,7 +3,7 @@ title: "博客附件功能演示"
 date: 2026-06-14T00:40:00+08:00
 draft: true
 description: "演示 Page Bundle 附件功能的文章，上线后删除"
-categories: ["技术"]
+categories: ["工具教程"]
 tags: ["Hugo", "博客"]
 keywords: ["Hugo附件", "Page Bundle"]
 ---
