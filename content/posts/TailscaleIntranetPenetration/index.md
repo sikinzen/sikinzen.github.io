@@ -204,3 +204,4 @@ Ubuntu 编译服务器目前尚未接入。等两台 Windows 跑通并优化 P2P
 
 - 第一篇：零端口暴露，5 分钟打通内网：Tailscale 内网穿透实战（本文）
 - 第二篇：[蒲公英 vs Tailscale：贝锐蒲公英内网穿透实战与方案对比](/posts/oraypgyintranetpenetration/)
+- 第三篇：[远程文件访问方案横评：向日葵 vs SMB vs Syncthing vs WebDAV](/posts/remotefileaccesscomparison/)

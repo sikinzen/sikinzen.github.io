@@ -171,3 +171,4 @@ series: ["网络与运维"]
 
 - 第一篇：[零端口暴露，5 分钟打通内网：Tailscale 内网穿透实战](/posts/tailscaleintranetpenetration/)
 - 第二篇：蒲公英 vs Tailscale：贝锐蒲公英内网穿透实战与方案对比（本文）
+- 第三篇：[远程文件访问方案横评：向日葵 vs SMB vs Syncthing vs WebDAV](/posts/remotefileaccesscomparison/)
