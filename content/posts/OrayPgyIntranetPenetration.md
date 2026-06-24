@@ -157,10 +157,17 @@ series: ["网络与运维"]
 
 ---
 
-## 遗留问题（系列待续）
+## 遗留问题
 
 - [ ] Tailscale UDP 41641 放行后，实测 P2P 直连速度
 - [ ] Ubuntu 编译服务器加入 Tailscale 网络
 - [ ] 蒲公英硬件网关实际部署体验和成本测算
 
 等有进展后再整理后续文章。
+
+---
+
+## 系列文章
+
+- 第一篇：[零端口暴露，5 分钟打通内网：Tailscale 内网穿透实战](/posts/tailscaleintranetpenetration/)
+- 第二篇：蒲公英 vs Tailscale：贝锐蒲公英内网穿透实战与方案对比（本文）

@@ -200,4 +200,7 @@ Ubuntu 编译服务器目前尚未接入。等两台 Windows 跑通并优化 P2P
 
 ---
 
-*本文是"网络与运维"系列的第一篇。后续将更新：P2P 直连优化、Ubuntu 编译机接入、自建 DERP 中继等话题。*
+## 系列文章
+
+- 第一篇：零端口暴露，5 分钟打通内网：Tailscale 内网穿透实战（本文）
+- 第二篇：[蒲公英 vs Tailscale：贝锐蒲公英内网穿透实战与方案对比](/posts/oraypgyintranetpenetration/)
