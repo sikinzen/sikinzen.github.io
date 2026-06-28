@@ -97,7 +97,7 @@ botpy 是腾讯官方维护的 QQ Bot Python SDK，封装了 WebSocket 连接和
 
 QQ Bot API 发送群消息需要 `group_openid`，这不是群号，需要通过 WebSocket 事件获取。
 
-创建 `qq_get_group_openid.py`：
+创建 `qq_get_group_openid.py`（[下载](/downloads/qq_get_group_openid.py)）：
 
 ```python
 #!/usr/bin/env python3
@@ -148,7 +148,7 @@ python qq_get_group_openid.py
 
 ### 第五步：编写推送脚本
 
-创建 `qq_send_group_msg.py`：
+创建 `qq_send_group_msg.py`（[下载](/downloads/qq_send_group_msg.py)）：
 
 ```python
 #!/usr/bin/env python3

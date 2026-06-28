@@ -84,7 +84,7 @@ rm scripts/example.py references/api_reference.md assets/example_asset.txt
 
 ### Step 2：将脚本复制进 `scripts/`
 
-直接把两个已脱敏的 Python 脚本放进去：
+直接把两个已脱敏的 Python 脚本放进去（[qq_get_group_openid.py](/downloads/qq_get_group_openid.py) / [qq_send_group_msg.py](/downloads/qq_send_group_msg.py)）：
 
 ```bash
 cp qq_get_group_openid.py ~/.workbuddy/skills/qq-group-push/scripts/
