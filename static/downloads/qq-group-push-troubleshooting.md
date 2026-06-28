@@ -11,7 +11,7 @@
 2. Verify AppID is correct (pure digits, no spaces)
 3. Click "Reset Secret" to get a fresh AppSecret — copy immediately (shown once)
 4. Ensure bot status is **已上线** (Online), not **开发中** (In Development). If in development mode, submit for review and wait for approval.
-5. Try sending AppID as integer in REST test: `{"appId":<your_appid_as_integer>,...}` — if this returns `100002` instead of `100016`, the API is reachable but credential format may vary.
+5. Try sending AppID as integer in REST test — if this returns `100002` instead of `100016`, the API is reachable but credential format may vary.
 
 ### 340067 — fetch robot info failed
 

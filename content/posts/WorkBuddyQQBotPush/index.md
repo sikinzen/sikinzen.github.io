@@ -421,6 +421,19 @@ qq-bot-push/
 
 ---
 
+## 附件下载
+
+以下脚本文件可直接下载使用（已脱敏，替换占位符即可）：
+
+| 文件 | 下载 | 说明 |
+|------|------|------|
+| `qq_get_group_openid.py` | [下载](/downloads/qq_get_group_openid.py) | 获取 QQ 群 group_openid（WebSocket 事件监听） |
+| `qq_send_group_msg.py` | [下载](/downloads/qq_send_group_msg.py) | 发送 QQ 群消息（WebSocket 连接+发送+退出） |
+
+> 附件中所有 `YOUR_APPID`、`YOUR_APPSECRET` 均为占位符，使用前需替换为真实值。完整 Skill 封装见后续文章 [WorkBuddy Skill 封装实战](/posts/workbuddyskillencapsulation/)。
+
+---
+
 ## 总结
 
 打通 WorkBuddy 自动化任务的消息推送，核心结论：

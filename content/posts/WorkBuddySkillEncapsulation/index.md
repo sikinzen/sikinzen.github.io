@@ -111,7 +111,7 @@ cp qq_send_group_msg.py  ~/.workbuddy/skills/qq-group-push/scripts/
 4. Ensure bot status is **已上线**, not **开发中**
 ```
 
-> 完整排查表见本文同目录下的 `references/troubleshooting.md`（已作为附件）。
+> 完整排查表见附件 [qq-group-push-troubleshooting.md](/downloads/qq-group-push-troubleshooting.md)。
 
 ### Step 4：编写核心文件 `SKILL.md`
 
@@ -154,7 +154,7 @@ agent_created: true                    # 标记为 AI 创建，允许 SkillManag
 ## Integration Patterns              ← 三种典型的自动化任务集成方式
 ```
 
-参考实际 `SKILL.md` 的完整内容（见本文同目录附件），特别注意以下几点：
+参考实际 [SKILL.md](/downloads/qq-group-push-SKILL.md) 的完整内容（已作为附件），特别注意以下几点：
 
 1. **Prerequisites 要穷尽**：如果用户没装 `qq-botpy`，Skill 加载后 AI 会尝试 `pip install`，但前提是你在 SKILL.md 里写明了这个依赖
 2. **Workflow 用祈使句**：每条操作指令直接可执行，不要加"你可以"、"建议你"这类前缀
@@ -260,16 +260,16 @@ python D:\Work\AI\AiMemory\Claw\qq_send_group_msg.py "消息内容"
 
 ---
 
-## 附件
+## 附件下载
 
-本文涉及的所有文件已放置在同目录下，下载后直接替换占位符即可使用：
+以下文件可直接下载使用（已脱敏，替换占位符即可）：
 
-| 文件 | 说明 |
-|------|------|
-| `SKILL.md` | QQ 群推送 Skill 的完整主文档 |
-| `qq_get_group_openid.py` | 获取 QQ 群 group_openid（WebSocket 事件监听） |
-| `qq_send_group_msg.py` | 发送 QQ 群消息（WebSocket 连接 + 发送 + 退出） |
-| `troubleshooting.md` | 7 个常见错误的排查速查表 |
+| 文件 | 下载 | 说明 |
+|------|------|------|
+| `SKILL.md` | [下载](/downloads/qq-group-push-SKILL.md) | QQ 群推送 Skill 的完整主文档（可直接放入 `~/.workbuddy/skills/`） |
+| `qq_get_group_openid.py` | [下载](/downloads/qq_get_group_openid.py) | 获取 QQ 群 group_openid（WebSocket 事件监听） |
+| `qq_send_group_msg.py` | [下载](/downloads/qq_send_group_msg.py) | 发送 QQ 群消息（WebSocket 连接 + 发送 + 退出） |
+| `troubleshooting.md` | [下载](/downloads/qq-group-push-troubleshooting.md) | 7 个常见错误的排查速查表 |
 
 > 附件中所有 `YOUR_APPID`、`YOUR_APPSECRET`、`YOUR_GROUP_OPENID` 均为占位符，使用前需替换为真实值。
 
