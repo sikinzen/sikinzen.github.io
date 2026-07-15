@@ -1,0 +1,32 @@
+/* ==========================================
+   标题层级区分 — 让 .post-content 下的 H2 / H3
+   在视觉上明确分级，解决"标题二"与"子标题"
+   肉眼难辨的问题（PaperMod 主题覆盖）
+   使用主题 CSS 变量，自动适配浅色 / 深色模式
+   ========================================== */
+
+/* H2：节标题
+   —— 大字号、加粗、下方细分隔线，作为"节"的视觉锚点 */
+.post-content h2 {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: var(--content);
+  margin-top: 2.2em;
+  margin-bottom: 1em;
+  padding-bottom: 0.35em;
+  border-bottom: 2px solid var(--border);
+}
+
+/* H3：子标题
+   —— 较小字号、中等字重、左侧 primary 色竖条 + 右缩进，
+      明确表达"这是 H2 的子项" */
+.post-content h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+  color: var(--content);
+  margin-top: 1.6em;
+  margin-bottom: 0.8em;
+  margin-left: 0.2em;
+  padding-left: 0.6em;
+  border-left: 3px solid var(--primary);
+}
