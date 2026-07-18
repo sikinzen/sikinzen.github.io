@@ -4,7 +4,7 @@ date: 2026-07-18T14:50:00+08:00
 draft: false
 description: "从零讲清 AI 助手是如何通过 Jenkins 自带的 REST API（而非连接器或官方 CLI）来读取配置、修改任务、管理节点、触发构建的，含真实踩坑与脱敏对照"
 summary: "记录用 WorkBuddy 操作 Jenkins 的完整原理：没有内置连接器，改用 Jenkins REST API + curl 直接调用，覆盖配置读写、节点管理、触发构建、脚本控制台，以及中文配置推送 500、CSRF 等注意事项"
-categories: ["AI应用", "CI/CD"]
+categories: ["AI应用"]
 tags: ["Jenkins", "REST API", "WorkBuddy", "持续集成", "curl", "自动化运维"]
 keywords: ["Jenkins REST API", "Jenkins AI", "curl Jenkins", "Jenkins 自动化", "WorkBuddy Jenkins"]
 series: ["AI工具链"]

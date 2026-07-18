@@ -4,7 +4,7 @@ date: 2026-07-18T14:50:00+08:00
 draft: false
 description: "以远程编译机用 Docker 编译嵌入式固件并自动上传为例，手把手教小白在 Jenkins 上搭建一条编译流水线，含节点注册、Docker 编译、6 段流水线脚本与常见坑"
 summary: "基于真实的内网构建任务整理：如何在 Jenkins 上搭建一条『拉代码 → Docker 编译 → 自动上传制品』的流水线，覆盖 Agent 节点注册、Java 版本坑、docker run 去 -t、holdOffBuildUntilSave 等实战要点"
-categories: ["CI/CD", "DevOps"]
+categories: ["AI应用"]
 tags: ["Jenkins", "Docker", "Pipeline", "编译", "持续集成", "自动化构建"]
 keywords: ["Jenkins Pipeline", "Docker 编译", "Jenkins agent", "自动化构建", "Jenkins 节点"]
 series: ["AI工具链"]
