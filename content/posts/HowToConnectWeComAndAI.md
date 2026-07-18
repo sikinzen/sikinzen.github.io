@@ -544,11 +544,16 @@ def extract_text(data):
 
 ---
 
-## 系列文章
-
-- [让 AI 读懂你的微信聊天记录：wechat-cli + wx_key 接入指南](./HowToConnectWechatAndAI.md) — 个人微信接入方案
-- 本文 — 企业微信接入方案
-
 ---
 
-*本文由 AI 助手辅助整理，所有踩坑经验均为真实记录。发布前已对敏感信息做脱敏处理，实际使用中请务必注意数据安全。*
+## 系列文章（AI 工具链）
+
+本博客「AI 工具链」系列，教你把各类研发工具接入 AI 助手（悟空）：
+
+- [让 AI 管理你的代码仓库：Gitea MCP Server 接入指南](https://sikinzen.github.io/posts/howtoconnectgiteaandai/)
+- [让 AI 帮你管代码评审：Gerrit 接入指南](https://sikinzen.github.io/posts/howtoconnectgerritandai/)
+- [让 AI 管理你的项目：禅道接入指南](https://sikinzen.github.io/posts/howtoconnectzentaoandai/)
+- [让 AI 读懂你的微信聊天记录：wechat-cli + wx_key 接入指南](https://sikinzen.github.io/posts/howtoconnectwechatandai/)
+- [让 AI 读懂你的企业微信：wechat-decrypt 接入指南](https://sikinzen.github.io/posts/howtoconnectwecomandai/)
+- [在 WorkBuddy 中通过 REST API 操作 Jenkins：原理与实战](https://sikinzen.github.io/posts/howtoconnectjenkinsandai/)
+- [在 Jenkins 上搭建基于 Docker 的编译流水线：手把手教程](https://sikinzen.github.io/posts/howtobuildjenkinscompilejob/)
