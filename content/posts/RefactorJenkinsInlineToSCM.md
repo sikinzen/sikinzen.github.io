@@ -5,10 +5,10 @@ lastmod: 2026-07-24T20:50:00+08:00
 draft: false
 description: "记录一次把 Jenkins 构建流水线从「Pipeline script 内联框」重构为「Pipeline script from SCM」（Jenkinsfile 进 Git）的全过程：为什么做、怎么做、以及过程中纠正的几个关键误区与踩坑。"
 summary: "以真实的 FM270 构建流水线 from-SCM 重构为例，讲清 Pipeline as Code 的动机、CpsScmFlowDefinition 与 CpsFlowDefinition 的区别、仓库布局与 lightweight checkout 等经验教训，并附脱敏后的完整 Jenkinsfile。"
-categories: ["运维实践"]
+categories: ["AI应用"]
 tags: ["Jenkins", "Pipeline", "Pipeline-as-Code", "CI/CD", "DevOps", "SCM", "Jenkinsfile"]
 keywords: ["jenkins", "pipeline", "from scm", "pipeline as code", "cpsscmflowdefinition", "cpsflowdefinition", "jenkinsfile", "ci/cd", "持续集成", "轻量检出"]
-series: []
+series: ["AI工具链"]
 ---
 
 把流水线脚本从 Jenkins 任务的「Pipeline script」内联框，搬进 Git 仓库、改用 **Pipeline script from SCM** 读取，是一次典型的 *Pipeline as Code* 实践。本文用我们一条真实存在的构建流水线（FM270 RK 固件每日构建）作为案例，复盘**为什么要搬、怎么搬、以及中途纠正的几个误区**。
@@ -321,3 +321,18 @@ pipeline {
 - 一旦脚本进了仓库，「加一个发布 stage、抽一个公共脚本、多项目复用同一仓库」都变得自然而然——重构后的 Stage 7「发布到禅道」就是最好的例子。
 
 如果你的 Jenkins 里还躺着几条内联流水线，值得抽个下午把它们搬进 SCM；风险可控（新旧并存验证），回报长期。
+
+---
+
+## 系列文章（AI 工具链）
+
+本博客「AI 工具链」系列，教你把各类研发工具接入 AI 助手（悟空）：
+
+- [让 AI 管理你的代码仓库：Gitea MCP Server 接入指南](https://sikinzen.github.io/posts/howtoconnectgiteaandai/)
+- [让 AI 帮你管代码评审：Gerrit 接入指南](https://sikinzen.github.io/posts/howtoconnectgerritandai/)
+- [让 AI 管理你的项目：禅道接入指南](https://sikinzen.github.io/posts/howtoconnectzentaoandai/)
+- [让 AI 读懂你的微信聊天记录：wechat-cli + wx_key 接入指南](https://sikinzen.github.io/posts/howtoconnectwechatandai/)
+- [让 AI 读懂你的企业微信：wechat-decrypt 接入指南](https://sikinzen.github.io/posts/howtoconnectwecomandai/)
+- [在 WorkBuddy 中通过 REST API 操作 Jenkins：原理与实战](https://sikinzen.github.io/posts/howtoconnectjenkinsandai/)
+- [在 Jenkins 上搭建基于 Docker 的编译流水线：手把手教程](https://sikinzen.github.io/posts/howtobuildjenkinscompilejob/)
+- [把 Jenkins 流水线重构为从 SCM 读取（Pipeline as Code）](https://sikinzen.github.io/posts/refactorjenkinsinlinetoscm/)

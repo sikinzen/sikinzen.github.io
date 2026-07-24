@@ -300,3 +300,4 @@ pipeline {
 - [让 AI 读懂你的企业微信：wechat-decrypt 接入指南](https://sikinzen.github.io/posts/howtoconnectwecomandai/)
 - [在 WorkBuddy 中通过 REST API 操作 Jenkins：原理与实战](https://sikinzen.github.io/posts/howtoconnectjenkinsandai/)
 - [在 Jenkins 上搭建基于 Docker 的编译流水线：手把手教程](https://sikinzen.github.io/posts/howtobuildjenkinscompilejob/)
+- [把 Jenkins 流水线重构为从 SCM 读取（Pipeline as Code）](https://sikinzen.github.io/posts/refactorjenkinsinlinetoscm/)
