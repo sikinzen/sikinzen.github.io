@@ -73,7 +73,19 @@ ccache -o compression=true
 
 ### 2.4 多版本共存建议
 
-若同一台服务器并存 Android 14 与 Android 16，建议**按大版本拆分 CCACHE_DIR**（如 `/media/D/ccache_a14` 与 `/media/D/ccache_a16`，各 100GB）。共享同一目录会导致工具链、宏定义差异的缓存相互淘汰，反而降低命中率。
+若同一台服务器同时编译 Android 14 与 Android 16，建议**按大版本拆分缓存目录**，避免工具链、宏定义差异导致相互淘汰：
+
+```bash
+# Android 14
+export CCACHE_DIR=/media/D/ccache_a14
+ccache -M 100G
+
+# Android 16
+export CCACHE_DIR=/media/D/ccache_a16
+ccache -M 100G
+```
+
+也可通过编译脚本根据工程路径自动切换 `CCACHE_DIR`。
 
 ---
 
