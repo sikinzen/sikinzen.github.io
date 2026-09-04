@@ -11,7 +11,7 @@ series: ["Ubuntu18.04编译服务器实战"]
 ---
 
 > **系列说明**：本文是《Ubuntu 18.04 编译服务器实战》系列**第二篇**，讲**装好系统后如何配置 Android 11–17 的编译环境**。
-> 系列第一篇《[Ubuntu 18.04 安装与图形排障]({{< ref \"ubuntu1804-install-graphics-troubleshooting.md\" >}})》解决装系统黑屏（nomodeset）与进桌面花屏（LightDM）。
+> 系列第一篇《[Ubuntu 18.04 装系统趟坑实录：U 盘启动 + 分区 + 黑屏（nomodeset）+ 花屏（LightDM）]({{< ref \"ubuntu1804-os-install-pitfalls.md\" >}})》解决装系统过程里的 U 盘启动、分区、swap、黑屏与花屏问题。
 > 全文**脱敏**：所有内网 IP、账号、密码、公司邮箱域名、manifest/分支/编译目标均已替换为占位符，文末「参数对照表」一次性列出你要填的全部取值。
 
 ---
