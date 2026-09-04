@@ -2,7 +2,7 @@
 title: "Ubuntu 18.04 安装与图形排障实录：黑屏（nomodeset 救安装）+ 花屏（LightDM 绕过 Wayland）"
 date: 2026-09-04T10:30:00+08:00
 draft: false
-description: "《Ubuntu 18.04 编译服务器实战》系列第一篇。同一台「新硬件 + 老系统」机器在装 Ubuntu 18.04 时会遇到两类图形问题：①安装/启动黑屏（老内核 4.15 不支持新核显 KMS，加 nomodeset 即可）；②进桌面后花屏（GDM3 默认 Wayland 登录界面在老 Mesa 上渲染异常，换纯 X11 的 LightDM 即可）。本文给出现象速判、根因原理、已验证修复与未验证备选，并附脱敏参数对照表。"
+description: "《Ubuntu 18.04 编译服务器实战》系列第一篇。「新硬件 + 老系统」机器在装 Ubuntu 18.04 时会遇到两类图形问题：①安装/启动黑屏（老内核 4.15 不支持新核显 KMS，加 nomodeset 即可）；②进桌面后花屏（GDM3 默认 Wayland 登录界面在老 Mesa 上渲染异常，换纯 X11 的 LightDM 即可）。注意以上两类问题分别出现在两台编译服务器上，并非同一台机器。本文给出现象速判、根因原理、已验证修复与未验证备选，并附脱敏参数对照表。"
 summary: "新硬件装 Ubuntu 18.04 两道图形坎：安装黑屏用 nomodeset（老内核不支持新核显 KMS），进桌面花屏换 LightDM（GDM 的 Wayland 路径在老 Mesa 上崩）。本文含速判表、原理、已验证步骤与未验证备选，系列第一篇。"
 categories: ["Linux"]
 tags: ["Ubuntu", "18.04", "黑屏", "花屏", "nomodeset", "KMS", "Wayland", "GDM", "LightDM", "故障排查"]
@@ -20,14 +20,14 @@ series: ["Ubuntu18.04编译服务器实战"]
 
 | 你遇到的是 | 典型现象 | 跳到 |
 |---|---|---|
-| **装系统 / 启动黑屏** | U 盘选 `Install Ubuntu` 后黑屏（NumLock 灯有响应），或装完重启进不去桌面 | [问题一](#问题一安装启动黑屏nomodeset-救安装) |
-| **进桌面后花屏** | 能进登录/桌面但撕裂、糊屏、残影、色彩错乱；TTY 与 `startx` 正常；同硬件 22.04 没事 | [问题二](#问题二进桌面花屏lightdm-绕过-wayland) |
+| **装系统 / 启动黑屏** | U 盘选 `Install Ubuntu` 后黑屏（NumLock 灯有响应），或装完重启进不去桌面 | [一](#一安装启动黑屏nomodeset-救安装) |
+| **进桌面后花屏** | 能进登录/桌面但撕裂、糊屏、残影、色彩错乱；TTY 与 `startx` 正常；同硬件 22.04 没事 | [二](#二进桌面花屏lightdm-绕过-wayland) |
 
 两类的共同前提：**新硬件（新核显/新显卡）+ 老系统（18.04 内核 4.15 / Mesa 18.2）**。根因不同，但都**不是显卡坏了**。
 
 ---
 
-## 问题一：安装/启动黑屏（nomodeset 救安装）
+## 一、安装/启动黑屏（nomodeset 救安装）
 
 ### 1.1 根因一句话
 
@@ -70,6 +70,8 @@ series: ["Ubuntu18.04编译服务器实战"]
 ```text
 normal
 ```
+此时开机后仍然无法回到GRUB菜单，一般是需要重启电脑后，连续点击ESC按键，等跳出grub菜单的时候就停止按按键，不能一直按着
+
 成功则回到 GRUB 菜单（无效再试 `exit`，仍不行 `reboot` 重来）。
 
 **2.3 加 `nomodeset` 进桌面**
@@ -157,7 +159,7 @@ sudo update-grub && sudo reboot
 
 ---
 
-## 问题二：进桌面花屏（LightDM 绕过 Wayland）
+## 二、进桌面花屏（LightDM 绕过 Wayland）
 
 ### 2.1 30 秒判断（四者全中就是它）
 
@@ -247,10 +249,10 @@ loginctl show-session "$(loginctl | awk '/seat/{print $1}')" -p Type
 # 3. 当前用的是哪个显示管理器
 cat /etc/X11/default-display-manager
 
-# 4. 另起一个 X 会话测试（见问题二四连判）
+# 4. 另起一个 X 会话测试（见「二、进桌面花屏」四连判）
 startx -- :1 &
 
-# 5. 看当前 grub 启动参数里有没有 nomodeset（问题一）
+# 5. 看当前 grub 启动参数里有没有 nomodeset（见「一、安装/启动黑屏」）
 grep nomodeset /etc/default/grub
 ```
 
