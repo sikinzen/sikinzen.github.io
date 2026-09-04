@@ -60,10 +60,10 @@ sudo vi /etc/samba/smb.conf
    public = yes
    writable = yes
    valid users = <BUILD_USER>
-   create mask = 0777
-   directory mask = 0777
-   force user = nobody
-   force group = nogroup
+   ;create mask = 0777
+   ;directory mask = 0777
+   ;force user = nobody
+   ;force group = nogroup
    available = yes
    browseable = yes
 ```
